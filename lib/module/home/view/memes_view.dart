@@ -17,9 +17,10 @@ class MemesDetailsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("${memesController.memes[index].name}"),centerTitle: true,),
       body: Container(
+        color: Colors.red,
         child: Column(
           children: [
-            
+
           ],
         ),
       ),
