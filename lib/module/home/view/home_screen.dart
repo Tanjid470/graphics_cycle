@@ -1,73 +1,64 @@
-
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:graphics_cycle/module/home/controller/memes_controller.dart';
-import 'package:graphics_cycle/module/home/view/memes_view.dart';
+import 'package:graphics_cycle/module/home/model/memes_model.dart';
+import 'package:http/http.dart' as http;
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class MemesController extends GetxController {
+  RxBool isLoading = true.obs;
+
+  List<Memes> memes = [];
+  RxList<Memes> filteredMemes = <Memes>[].obs; // List for filtered memes
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  MemesController memesController = Get.put(MemesController());
-  @override
-  void initState() {
-    memesController.setMemes();
-    super.initState();
+  void onInit() {
+    setMemes(); // Automatically load memes when the controller is initialized
+    super.onInit();
   }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      
-      body: Container(
-        child: Center(
-          child:Obx(() => memesController.isLoading.value 
-          ? const CircularProgressIndicator() 
-          :ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            shrinkWrap: true,
-            itemCount: memesController.memes.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MemesDetailsView(index: index, memesController: memesController,)),
-                  );
-                                  },
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.amber.shade50,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.amber,
-                        spreadRadius: 2
-                      )
-                    ]
-                  ),
-                  child: Column(
-                    children: [
-                      Text("${memesController.memes[index].name}"),
-                      Container(
-                        height: 200,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(memesController.memes[index].url ?? ''))),
-                      )
-                    ],
-                  ),
-                ),
-              );
-            
-          },)
-          ),
-        ),
-      ),
-    );
+
+  Future<bool> setMemes() async {
+    var fetchMemes = await getMemes();
+    try {
+      if (fetchMemes?.data?.memes?.isNotEmpty == true) {
+        memes.addAll(fetchMemes!.data!.memes ?? []);
+        filteredMemes.value = memes; // Initialize filtered list with all memes
+        isLoading.value = false;
+        return true;
+      } else {
+        isLoading.value = false;
+        return false;
+      }
+    } catch (e) {
+      isLoading.value = false;
+      return false;
+    }
+  }
+
+  Future<MemesModel?> getMemes() async {
+    try {
+      var response = await http.get(Uri.parse("https://api.imgflip.com/get_memes"));
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body);
+        if (data != null) {
+          var meemsFromJson = memesModelFromJson(utf8.decode(response.bodyBytes));
+          return meemsFromJson;
+        }
+      } else {
+        return null;
+      }
+    } catch (exception) {
+      rethrow;
+    }
+    return null;
+  }
+
+  // Method to filter memes based on the search query
+  void searchMemes(String query) {
+    if (query.isEmpty) {
+      filteredMemes.value = memes; // Reset to all memes if search query is empty
+    } else {
+      filteredMemes.value = memes
+          .where((meme) => meme.name!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
   }
 }

@@ -9,6 +9,7 @@ class MemesController extends GetxController{
   RxBool isLoading = true.obs;
 
   List<Memes> memes = [];
+  RxList<Memes> filteredMemes = <Memes>[].obs;
   
   Future<bool> setMemes() async {
     var fetchMemes = await getMemes();
@@ -48,4 +49,13 @@ class MemesController extends GetxController{
     return null;
   }
 
+  void searchMemes(String query) {
+    if (query.isEmpty) {
+      filteredMemes.value = memes; // Reset to all memes if search query is empty
+    } else {
+      filteredMemes.value = memes
+          .where((meme) => meme.name!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+  }
 }
