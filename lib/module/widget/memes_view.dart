@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:graphics_cycle/module/home/controller/memes_controller.dart';
+import 'package:graphics_cycle/module/widget/save.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -46,7 +47,13 @@ class _MemesDetailsViewState extends State<MemesDetailsView> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await _cropImage(widget.memesController.memes[widget.index].url.toString());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                    CropImageScreen( url: '${widget.memesController.memes[widget.index].url}')),
+                );
+                //await _cropImage(widget.memesController.memes[widget.index].url.toString());
               },
               child: const Text('Crop & Rotate Image'),
             ),
@@ -108,9 +115,9 @@ class _MemesDetailsViewState extends State<MemesDetailsView> {
 
     if (croppedFile != null) {
       log(croppedFile.path.toString());
-      setState(() {
-        //widget.memesController.memes[widget.index].url = croppedFile.path;
-      });
+      // setState(() {
+      //   //widget.memesController.memes[widget.index].url = croppedFile.path;
+      // });
     }
   }
 
