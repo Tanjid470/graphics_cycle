@@ -28,6 +28,6 @@ This Flutter application fetches a list of popular memes from the Imgflip API ([
      http: ^0.13.4                     # For making API requests
      image_cropper: ^2.0.1             # For image cropping and rotation
      gallery_saver: ^2.2.1              # For saving images to the gallery
-     # Add other dependencies as needed
+
 
 
