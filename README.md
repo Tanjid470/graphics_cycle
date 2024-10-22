@@ -34,4 +34,13 @@ lib/
 │       └── search_bar.dart            # Search bar widget
 ├── pubspec.yaml                       # Project configuration and dependencies
 └── README.md                          # This file (instructions and usage guide)
+```bash
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.4                     # For making API requests
+  image_cropper: ^2.0.1             # For image cropping and rotation
+  gallery_saver: ^2.2.1              # For saving images to the gallery
+  # Add other dependencies as needed
+
 
