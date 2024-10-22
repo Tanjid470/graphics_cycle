@@ -18,29 +18,16 @@ This Flutter application fetches a list of popular memes from the Imgflip API ([
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/flutter_meme_app.git
-```bash
-lib/
-├── main.dart                          # App entry point
-├── models/
-│   └── meme.dart                     # Meme data model class
-├── services/
-│   └── meme_api_service.dart         # Service for fetching memes from API
-├── ui/
-│   ├── app_bar.dart                  # Reusable app bar component
-│   ├── home_screen.dart              # Home screen with meme list and search
-│   ├── meme_details_screen.dart       # Screen for detailed meme view and editing
-│   └── widgets/
-│       ├── meme_card.dart             # Reusable meme card widget
-│       └── search_bar.dart            # Search bar widget
-├── pubspec.yaml                       # Project configuration and dependencies
-└── README.md                          # This file (instructions and usage guide)
-```bash
-dependencies:
-  flutter:
-    sdk: flutter
-  http: ^0.13.4                     # For making API requests
-  image_cropper: ^2.0.1             # For image cropping and rotation
-  gallery_saver: ^2.2.1              # For saving images to the gallery
-  # Add other dependencies as needed
+ 
+  
+## Dependencies
+  ```bash
+   dependencies:
+     flutter:
+       sdk: flutter
+     http: ^0.13.4                     # For making API requests
+     image_cropper: ^2.0.1             # For image cropping and rotation
+     gallery_saver: ^2.2.1              # For saving images to the gallery
+     # Add other dependencies as needed
 
 
