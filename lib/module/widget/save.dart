@@ -62,7 +62,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
     }
   }
 
-  // Example leading action: Back button
+
   Widget _buildLeadingAction() {
     return IconButton(
       icon: Icon(Icons.arrow_back),
@@ -72,10 +72,10 @@ class _CropImageScreenState extends State<CropImageScreen> {
     );
   }
 
-  // Example trailing action: Save/Download button
+
   Widget _buildTrailingAction() {
     return IconButton(
-      icon: Icon(Icons.save),
+      icon: const Icon(Icons.save),
       onPressed: () {
         if (croppedFile != null) {
           saveImage(croppedFile!.path);
@@ -84,7 +84,7 @@ class _CropImageScreenState extends State<CropImageScreen> {
               backgroundColor: const Color(0xffC9EFDE),
               colorText: Colors.black,
               icon: const Icon(Icons.offline_pin_outlined,color: Color(0xff14452F),),
-              snackPosition: SnackPosition.TOP);
+              snackPosition: SnackPosition.BOTTOM);
           debugPrint('Download or save image: ${croppedFile!.path}');
         } else {
           debugPrint('No image to save.');
@@ -98,9 +98,9 @@ class _CropImageScreenState extends State<CropImageScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Crop Image'),
-        leading: _buildLeadingAction(), // Leading action (Back button)
+        leading: _buildLeadingAction(),
         actions: [
-          _buildTrailingAction(), // Trailing action (Save button)
+          _buildTrailingAction(),
         ],
       ),
       body: Center(
