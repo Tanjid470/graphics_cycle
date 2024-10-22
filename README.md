@@ -18,6 +18,7 @@ This Flutter application fetches a list of popular memes from the Imgflip API ([
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/flutter_meme_app.git
+```bash
 lib/
 ├── main.dart                          # App entry point
 ├── models/
